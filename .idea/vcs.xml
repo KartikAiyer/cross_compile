@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/build_toolchains/linux" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/mac_build/build_toolchains/glibc-2.31" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/mac_build/build_toolchains/linux" vcs="Git" />
+  </component>
+</project>
