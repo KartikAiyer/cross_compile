@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # This script can be called to run a build/test/command inside the Docker
 # build environment container.
@@ -156,7 +156,7 @@ else
     # use the hostname
     DOCKER_RUN_ARGS+=("-h $(hostname)")
 
-    DOCKER_COMMAND=("bash ${SCRIPT_PATH}")
+    DOCKER_COMMAND=(bash "${SCRIPT_PATH}")
 fi
 echo "DOCKER VOLUMES: ${DOCKER_VOLUMES}"
 echo "${DOCKER_RUN_ARGS}"

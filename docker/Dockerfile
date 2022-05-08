@@ -31,6 +31,16 @@ RUN apt-get update --fix-missing && DEBIAN_FRONTEND=noninteractive apt-get insta
    time \
    software-properties-common
 
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
+
+RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null
+RUN apt update
+
+RUN wget https://github.com/Kitware/CMake/releases/download/v3.22.4/cmake-3.22.4.tar.gz && \
+    tar -xzf cmake-3.22.4.tar.gz && \
+    cd cmake-3.22.4 &&\
+    ./bootstrap && make -j$(nproc) && sudo make install
+
 RUN apt update && apt install -y \
     openssl \
     pkgconf \
@@ -49,21 +59,14 @@ RUN apt update && apt install -y \
    graphviz \
    libsnappy-dev \
    sed \
-   bison
-
-RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | sudo tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null
-
-RUN echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ focal main' | sudo tee /etc/apt/sources.list.d/kitware.list >/dev/null
-RUN apt update
-
-RUN wget https://github.com/Kitware/CMake/releases/download/v3.22.4/cmake-3.22.4.tar.gz && \
-    tar -xzf cmake-3.22.4.tar.gz && \
-    cd cmake-3.22.4 &&\
-    ./bootstrap && make -j$(nproc) && sudo make install
+   bison \
+   texinfo \
+   pigz
 
 RUN apt update && apt install -y ccache
 
 ENV PATH=${PATH}:${HOME}/.local/bin
+ENV MOUNT_PATH=/home/kartik/project
 
 ARG UNAME=kartik
 ARG UID=501
