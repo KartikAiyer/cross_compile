@@ -280,10 +280,11 @@ if [ "$GCC_VERSION" != "$GCCBASE_VERSION" ]; then
 	echo "Done Building Native GDB Binaries..."
 
 	mv "$BUILDDIR"/native-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION "$HOME"
-	cd "$HOME" || exit
+	cd "$BUILDDIR" || exit
 	#compress with maximum possible compression level.
 	tar cf - native-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION | pigz -9 -p 32 >native-gcc-"$GCC_VERSION"-pi_"$FOLDER_VERSION".tar.gz
-	rm -rf "$HOME"/native-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION
+	rm -rf native-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION
+	cd -
 	echo "Done Building Native GCC $GCC_VERSION Binaries..."
 fi
 
@@ -299,12 +300,12 @@ make -s install DESTDIR="$INSTALLDIR"
 if [ -n "$(ls -A "$DOWNLOADDIR"/gdb-$GDB_VERSION/build)" ]; then rm -rf "$DOWNLOADDIR"/gdb-$GDB_VERSION/build/*; fi
 echo "Done Building Cross GDB Binaries..."
 
-mv "$BUILDDIR"/cross-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION "$HOME"
-cd "$HOME" || exit
+cd "$BUILDDIR" || exit
 #compress with maximum possible compression level.
 tar cf - cross-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION | pigz -9 >cross-gcc-"$GCC_VERSION"-pi_"$FOLDER_VERSION".tar.gz
 echo "Done Building Cross GCC $GCC_VERSION Binaries..."
-rm -rf "$HOME"/cross-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION
+rm -rf "$BUILDDIR"/cross-pi-gcc-"$GCC_VERSION"-$FOLDER_VERSION
+cd -
 
 #clean path
 PATH=$(echo "$PATH" | sed -e 's;:\?$BUILDDIR/cross-pi-gcc-$GCC_VERSION-$FOLDER_VERSION/bin;;' -e 's;$BUILDDIR/cross-pi-gcc-$GCC_VERSION-$FOLDER_VERSION/bin:\?;;')
