@@ -3,4 +3,4 @@
 set -eeo pipefail
 
 export BUILDDIR=${MOUNT_PATH}/toolchain
-${MOUNT_PATH}/scripts/toolchain32.sh -g 10.2.0 -o bullseye
+${MOUNT_PATH}/scripts/toolchain32.sh -g 10.2.0 -o bullseye -r 3+
